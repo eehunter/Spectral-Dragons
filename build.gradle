@@ -18,8 +18,8 @@ plugins {
     id ("idea")
     id ("maven-publish")
     id ("net.minecraftforge.gradle") version "[6.0,6.2)"
-    //id ("org.parchmentmc.librarian.forgegradle") version "1.+"
     id ("org.spongepowered.mixin") version "0.7-SNAPSHOT"
+    id ("org.parchmentmc.librarian.forgegradle") version "1.+"
 
 
     // Adds the Kotlin Gradle plugin
@@ -145,7 +145,7 @@ repositories {
     // flatDir {
     //     dir "libs"
     // }
-    flatDir { dirs 'libs' }
+    flatDir { dir ("libs") }
 
 
     maven {
@@ -208,14 +208,15 @@ dependencies {
     compileOnly ("dev.su5ed.sinytra.fabric-api:fabric-api:${ffapi_version}")
     runtimeOnly (fg.deobf("dev.su5ed.sinytra.fabric-api:fabric-api:${ffapi_version}"))
 
-    minecraftLibrary (fg.deobf("maven.modrinth:connector-extras:${connector_extras_version}"))
+    implementation (fg.deobf("maven.modrinth:connector-extras:${connector_extras_version}"))
 
 
     // Dragon Survival
     //implementation fg.deobf("libs:dragonsurvival:${dragonsurvival_version}")
     // Fine then. I'll do it this way.
-    //implementation fg.deobf(fileTree(dir: "libs", include: "*.jar"))
     implementation fg.deobf("software.bernie.geckolib:geckolib-forge-${minecraft_version}:${geckolib_version}")
+    implementation fg.deobf("libs:DragonSurvival:1.20.1-09.01.2024")
+    //fg.deobf(name: "DragonSurvival-1.20.1-09.01.2024")//fileTree(dir: "libs", include: "*.jar"))
 
     // Install desired Fabric mods
     //implementation ("some.fabric:mod:<version>")
@@ -238,7 +239,7 @@ dependencies {
 
     implementation("vazkii.patchouli:Patchouli:${patchouli_version}") {exclude(group: "net.fabricmc");exclude(group: "net.fabricmc.fabric-api");exclude(group: "com.jamieswhiteshirt")}
     implementation("com.terraformersmc:modmenu:${modmenu_version}"){exclude(group: "net.fabricmc");exclude(group: "net.fabricmc.fabric-api");exclude(group: "com.jamieswhiteshirt")}
-    implementation("dev.architectury:architectury-forge:${architectury_version}") //{exclude(group: "net.fabricmc");exclude(group: "net.fabricmc.fabric-api");exclude(group: "com.jamieswhiteshirt")}
+    //implementation("dev.architectury:architectury-forge:${architectury_version}") //{exclude(group: "net.fabricmc");exclude(group: "net.fabricmc.fabric-api");exclude(group: "com.jamieswhiteshirt")}
     implementation("dev.emi:trinkets:${trinkets_version}") {exclude(group: "net.fabricmc");exclude(group: "net.fabricmc.fabric-api");exclude(group: "com.jamieswhiteshirt")}
 
 
