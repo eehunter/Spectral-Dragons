@@ -1,9 +1,12 @@
 package com.oyosite.ticon.specdergs
 
 import com.oyosite.ticon.specdergs.SpectralDragons.MODID
+import com.oyosite.ticon.specdergs.block.DergBlocks
+import com.oyosite.ticon.specdergs.item.DergItems
 import net.minecraft.client.Minecraft
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent
 import net.minecraftforge.fml.event.lifecycle.FMLDedicatedServerSetupEvent
 import thedarkcolour.kotlinforforge.forge.MOD_BUS
 import thedarkcolour.kotlinforforge.forge.runForDist
@@ -22,6 +25,8 @@ object SpectralDragons {
     init {
         LOGGER.log(Level.INFO, "Hello world!")
 
+        MOD_BUS.addListener(::onCommonSetup)
+
         runForDist(
             clientTarget = {
                 MOD_BUS.addListener(::onClientSetup)
@@ -31,6 +36,11 @@ object SpectralDragons {
             }
         )
 
+    }
+
+    private fun onCommonSetup(event: FMLCommonSetupEvent){
+        DergItems.ITEMS.register(MOD_BUS)
+        DergBlocks.BLOCKS.register(MOD_BUS)
     }
 
     private fun onClientSetup(event: FMLClientSetupEvent) {

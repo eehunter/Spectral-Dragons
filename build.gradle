@@ -223,7 +223,8 @@ dependencies {
     implementation ("thedarkcolour:kotlinforforge:4.10.0")
 
     implementation("com.github.Noaaan:Matchbooks:${matchbooks_version}") {exclude(group: "net.fabricmc");exclude(group: "net.fabricmc.fabric-api");exclude(group: "com.jamieswhiteshirt")}
-    implementation("maven.modrinth:Revelationary:${revelationary_version}") {exclude(group: "net.fabricmc");exclude(group: "net.fabricmc.fabric-api");exclude(group: "com.jamieswhiteshirt")}
+    compileOnly (fg.deobf("maven.modrinth:Revelationary:${revelationary_version}")) {exclude(group: "net.fabricmc");exclude(group: "net.fabricmc.fabric-api");exclude(group: "com.jamieswhiteshirt")}
+    runtimeOnly("maven.modrinth:Revelationary:${revelationary_version}") {exclude(group: "net.fabricmc");exclude(group: "net.fabricmc.fabric-api");exclude(group: "com.jamieswhiteshirt")}
     implementation("maven.modrinth:AdditionalEntityAttributes:${additional_entity_attributes_version}"){exclude(group: "net.fabricmc");exclude(group: "net.fabricmc.fabric-api");exclude(group: "com.jamieswhiteshirt")}
     implementation("com.github.DaFuqs:Arrowhead:${arrowhead_version}") {exclude(group: "net.fabricmc");exclude(group: "net.fabricmc.fabric-api");exclude(group: "com.jamieswhiteshirt")}
     implementation("maven.modrinth:fractal-lib:${fractal_version}") {exclude(group: "net.fabricmc");exclude(group: "net.fabricmc.fabric-api");exclude(group: "com.jamieswhiteshirt")}
