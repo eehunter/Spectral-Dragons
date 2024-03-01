@@ -5,8 +5,8 @@ import de.dafuqs.revelationary.api.revelations.RevelationAware
 import net.minecraft.resources.ResourceLocation
 import software.bernie.geckolib.core.`object`.Color
 
-class RevelationAwareTreasure(color: Color, settings: Properties) : TreasureBlock(color, settings), RevelationAware {
-    override fun getCloakAdvancementIdentifier(): ResourceLocation {
+class RevelationAwareTreasure(color: Color, settings: Properties) : TreasureBlock(color, settings)/*, RevelationAware*/ {
+    /*override fun getCloakAdvancementIdentifier(): ResourceLocation {
         TODO("Not yet implemented")
     }
 
@@ -16,5 +16,5 @@ class RevelationAwareTreasure(color: Color, settings: Properties) : TreasureBloc
 
     override fun getItemCloak(): net.minecraft.class_3545? {
         TODO("Not yet implemented")
-    }
+    }*/
 }
