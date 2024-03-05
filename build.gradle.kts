@@ -24,12 +24,20 @@ buildscript {
     }
     dependencies {
 
-        classpath("com.google.code.gson:gson:2.10.1")
+        classpath(enforcedPlatform("com.google.code.gson:gson:2.10"))
         classpath ("org.ow2.asm:asm-tree:9.5")
         classpath ("org.spongepowered:mixingradle:0.7-SNAPSHOT"){
             exclude("org.ow2")
             exclude("com.google.code.gson")
         }
+
+    }
+    configurations.all{
+        //classpath{
+            resolutionStrategy{
+                force("com.google.code.gson:gson:2.10.1")
+            }
+        //}
     }
 }
 
@@ -66,7 +74,7 @@ base {
 val mapping_channel: String by properties
 val mapping_version: String by properties
 
-object YarnChannelProvider: ChannelProvider {
+/*object YarnChannelProvider: ChannelProvider {
     override fun getChannels(): MutableSet<String> {
         println("channels")
         return mutableSetOf("yarn")
@@ -78,7 +86,7 @@ object YarnChannelProvider: ChannelProvider {
         return MavenArtifactDownloader.manual(project, desc, false);
     }
 
-}
+}*/
 project.extensions.getByType(ChannelProvidersExtension::class.java).run {
     //addProvider(YarnChannelProvider)
 }
@@ -294,7 +302,7 @@ dependencies {
     implementation ("thedarkcolour:kotlinforforge:4.10.0")
 
     implementation("com.github.Noaaan:Matchbooks:${matchbooks_version}") {exclude("net.fabricmc");exclude("net.fabricmc.fabric-api");exclude("com.jamieswhiteshirt")}
-    compileOnly(project(path = ":intermediary-deobf", configuration = "modRuntimeClasspathMainMapped"))
+    compileOnly(project(path = ":intermediary-deobf", configuration = "modRuntimeClasspathMainMapped")){exclude("com.google.code.gson")}
     //compileOnly (fg.deobf("maven.modrinth:Revelationary:${revelationary_version}")) {
         //exclude(group = "net.fabricmc", module = null)
         //exclude(group = "net.fabricmc.fabric-api")
@@ -393,16 +401,17 @@ tasks.named<Jar>("jar").configure {
     finalizedBy ("reobfJar")
 }
 
-val loom_layered_hash: String by project
-
 tasks.register<Copy>("fetchLibs"){
     from(fileTree("intermediary-deobf/build/loom-cache/remapped_working"))
-    include("*${loom_layered_hash}*.jar")
+    include("*.jar")
 
     exclude("*-sources.jar")
     rename {
         println(it)
-        it.slice(it.indexOf('-')+1 until it.length)
+        it.slice(it.indexOf('-')+1 until it.length).let{n->
+            (if(n.startsWith("components-api-")) n.slice("components-api-".length until n.length)
+            else n)
+        }
     }
     into(project.file("libs"))
 }

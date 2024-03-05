@@ -12,13 +12,14 @@ buildscript {
         }
     }
 
-    //dependencies {
+    dependencies {
+        classpath(enforcedPlatform("com.google.code.gson:gson:2.10"))
     //    classpath("com.google.code.gson:gson:2.10.1")
-    //}
+    }
 }
 
 plugins {
-    id ("dev.architectury.loom") version "1.4-SNAPSHOT"
+    id ("dev.architectury.loom") version "1.5-SNAPSHOT"
     //id("fabric-loom") version "1.5-SNAPSHOT"
     //id ("org.jetbrains.kotlin.jvm") version "1.9.22"
 }
@@ -46,6 +47,12 @@ repositories{
     maven{setUrl("https://maven.ladysnake.org/releases")}
 }
 
+val cloth_config_version: String by project.rootProject
+val cardinal_components_version: String by project.rootProject
+
+val patchouli_version: String by project.rootProject
+val modmenu_version: String by project.rootProject
+val trinkets_version: String by project.rootProject
 
 val revelationary_version: String by project.rootProject
 val matchbooks_version: String by project.rootProject
@@ -61,6 +68,8 @@ val parchment_version: String by project
 
 dependencies{
     //minecraft("com.mojang:minecraft:${property("minecraft_version")}")
+    implementation("com.google.code.gson:gson:2.10")
+
     minecraft("com.mojang:minecraft:$minecraft_version")
     //mappings("net.fabricmc:yarn:1.20.1+build.10:v2")//loom.officialMojangMappings())//("org.parchmentmc.data:parchment-1.20.1:2023.09.03@zip"))
     mappings (loom.layered {
@@ -79,8 +88,18 @@ dependencies{
     modImplementation("maven.modrinth:fractal-lib:${fractal_version}") {exclude("net.fabricmc");exclude("net.fabricmc.fabric-api");exclude("com.jamieswhiteshirt")}
     modImplementation("com.github.DaFuqs:DimensionalReverb:${dimensional_reverb_version}") {exclude("net.fabricmc");exclude("net.fabricmc.fabric-api");exclude("com.jamieswhiteshirt")}
 
+    modImplementation("me.shedaniel.cloth:cloth-config-fabric:${cloth_config_version}") {exclude("net.fabricmc");exclude("net.fabricmc.fabric-api");exclude("com.jamieswhiteshirt")}
 
-    //modCompileOnly("maven.modrinth:Spectrum:${spectrum_version}"){}
+    modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${cardinal_components_version}") {exclude("net.fabricmc");exclude("net.fabricmc.fabric-api");exclude("com.jamieswhiteshirt")}
+    modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-scoreboard:${cardinal_components_version}") {exclude("net.fabricmc");exclude("net.fabricmc.fabric-api");exclude("com.jamieswhiteshirt")}
+    modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-level:${cardinal_components_version}") {exclude("net.fabricmc");exclude("net.fabricmc.fabric-api");exclude("com.jamieswhiteshirt")}
+
+    modImplementation("vazkii.patchouli:Patchouli:${patchouli_version}") {exclude("net.fabricmc");exclude("net.fabricmc.fabric-api");exclude("com.jamieswhiteshirt")}
+    modImplementation("com.terraformersmc:modmenu:${modmenu_version}"){exclude("net.fabricmc");exclude("net.fabricmc.fabric-api");exclude("com.jamieswhiteshirt")}
+
+    modImplementation("dev.emi:trinkets:${trinkets_version}") {exclude("net.fabricmc");exclude("net.fabricmc.fabric-api");exclude("com.jamieswhiteshirt")}
+
+    modImplementation("maven.modrinth:Spectrum:${spectrum_version}"){exclude("net.fabricmc");exclude("net.fabricmc.fabric-api");exclude("com.jamieswhiteshirt")}
 }
 
 java {
