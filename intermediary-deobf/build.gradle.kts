@@ -1,15 +1,25 @@
 
 buildscript {
     repositories {
+        mavenCentral()
         maven {
             name = "Architectury"
             url = uri("https://maven.architectury.dev")
         }
+        maven {
+            name = "Fabric"
+            url = uri("https://maven.fabricmc.net/")
+        }
     }
+
+    //dependencies {
+    //    classpath("com.google.code.gson:gson:2.10.1")
+    //}
 }
 
 plugins {
     id ("dev.architectury.loom") version "1.4-SNAPSHOT"
+    //id("fabric-loom") version "1.5-SNAPSHOT"
     //id ("org.jetbrains.kotlin.jvm") version "1.9.22"
 }
 
@@ -37,16 +47,40 @@ repositories{
 }
 
 
-val revelationary_version: String by project
-val minecraft_version: String by project
+val revelationary_version: String by project.rootProject
+val matchbooks_version: String by project.rootProject
+val additional_entity_attributes_version: String by project.rootProject
+val arrowhead_version: String by project.rootProject
+val fractal_version: String by project.rootProject
+val dimensional_reverb_version: String by project.rootProject
+
+val spectrum_version: String by project.rootProject
+
+val minecraft_version: String by project.rootProject
+val parchment_version: String by project
 
 dependencies{
     //minecraft("com.mojang:minecraft:${property("minecraft_version")}")
     minecraft("com.mojang:minecraft:$minecraft_version")
-    mappings("net.fabricmc:yarn:1.20.1+build.10:v2")//loom.officialMojangMappings())//("org.parchmentmc.data:parchment-1.20.1:2023.09.03@zip"))
+    //mappings("net.fabricmc:yarn:1.20.1+build.10:v2")//loom.officialMojangMappings())//("org.parchmentmc.data:parchment-1.20.1:2023.09.03@zip"))
+    mappings (loom.layered {
+        //mappings("net.fabricmc:yarn:1.20.1+build.10:v2")
+        officialMojangMappings()
+        parchment("org.parchmentmc.data:parchment-$minecraft_version:${parchment_version}@zip")
+    })
     //forge(group = "net.minecraftforge", name = "forge", version = "1.20.1-47.2.20")
 
-    //modImplementation("maven.modrinth:Revelationary:${revelationary_version}"){}
+    modImplementation("maven.modrinth:Revelationary:${revelationary_version}"){}
+
+    modImplementation("com.github.Noaaan:Matchbooks:${matchbooks_version}") {exclude("net.fabricmc");exclude("net.fabricmc.fabric-api");exclude("com.jamieswhiteshirt")}
+
+    modImplementation("maven.modrinth:AdditionalEntityAttributes:${additional_entity_attributes_version}"){exclude("net.fabricmc");exclude("net.fabricmc.fabric-api");exclude("com.jamieswhiteshirt")}
+    modImplementation("com.github.DaFuqs:Arrowhead:${arrowhead_version}") {exclude("net.fabricmc");exclude("net.fabricmc.fabric-api");exclude("com.jamieswhiteshirt")}
+    modImplementation("maven.modrinth:fractal-lib:${fractal_version}") {exclude("net.fabricmc");exclude("net.fabricmc.fabric-api");exclude("com.jamieswhiteshirt")}
+    modImplementation("com.github.DaFuqs:DimensionalReverb:${dimensional_reverb_version}") {exclude("net.fabricmc");exclude("net.fabricmc.fabric-api");exclude("com.jamieswhiteshirt")}
+
+
+    //modCompileOnly("maven.modrinth:Spectrum:${spectrum_version}"){}
 }
 
 java {
